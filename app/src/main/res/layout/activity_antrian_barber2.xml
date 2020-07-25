@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AntrianBarberActivity2">
+
+    <LinearLayout
+        android:id="@+id/lin1"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+        <Button
+            android:background="@drawable/menu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <TextView
+            android:text="Barber Menu"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_marginLeft="-60dp"
+            android:backgroundTint="#646464"
+            android:background="@drawable/user"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+    </LinearLayout>
+    <ScrollView
+        android:layout_below="@id/lin1"
+        android:layout_above="@id/botomNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/lin2"
+                android:padding="5dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wellcome"
+                    android:textSize="20dp"
+                    />
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/background_view"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="10dp"
+                    android:layout_height="150dp"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_edit_text"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="10dp"
+                    android:layout_height="150dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_below="@id/lin2"
+                android:id="@+id/linearHair"
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="55dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Haircut Reservations"
+                    android:textSize="15dp"
+                    android:textStyle="bold"/>
+                <Button
+                    android:layout_marginLeft="195dp"
+                    android:backgroundTint="#646464"
+                    android:background="@drawable/ic_baseline_arrow_forward_24"
+                    android:layout_width="40dp"
+                    android:id="@+id/btn1"
+                    android:layout_height="40dp"/>
+
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_below="@id/linearHair"
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+                <androidx.recyclerview.widget.RecyclerView
+
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scrollbars="vertical"
+
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/botomNavBar"
+        android:layout_alignParentBottom="true"
+        android:background="#BABABA"
+        app:menu="@menu/menu_bottom_nav"
+        app:itemTextColor="@drawable/color_state"
+        app:itemIconTint="@drawable/color_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
