@@ -43,6 +43,7 @@ public class DaftarActivity2 extends AppCompatActivity {
     Button tombolmasuk;
 
     ApiInterface apiInterface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,26 +53,21 @@ public class DaftarActivity2 extends AppCompatActivity {
         tombolmasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(nama.getText(). toString())){
+                if (TextUtils.isEmpty(nama.getText().toString())) {
                     nama.setError("Field Cannot Empty");
-                }else
-                if (TextUtils.isEmpty(username.getText(). toString())){
+                } else if (TextUtils.isEmpty(username.getText().toString())) {
                     username.setError("Field Cannot Empty");
-                }else
-                if (TextUtils.isEmpty(notelp.getText(). toString())){
+                } else if (TextUtils.isEmpty(notelp.getText().toString())) {
                     notelp.setError("Field Cannot Empty");
-                }else
-                if (TextUtils.isEmpty(email.getText(). toString())){
+                } else if (TextUtils.isEmpty(email.getText().toString())) {
                     email.setError("Field Cannot Empty");
-                }else
-                if (TextUtils.isEmpty(password.getText(). toString())){
+                } else if (TextUtils.isEmpty(password.getText().toString())) {
                     password.setError("Field Cannot Empty");
-                }else
-                if (TextUtils.isEmpty(password2.getText(). toString())){
+                } else if (TextUtils.isEmpty(password2.getText().toString())) {
                     password2.setError("Field Cannot Empty");
-                }else if(password.getText().toString().equals(password2.getText().toString())){
+                } else if (!password.getText().toString().equals(password2.getText().toString())) {
                     Toast.makeText(DaftarActivity2.this, "Password doesn't match", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     FetchRegister();
                 }
             }
@@ -87,16 +83,16 @@ public class DaftarActivity2 extends AppCompatActivity {
                 password.getText().toString()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if (jsonObject.getString("status").equals("200")){
-                            Toast.makeText(DaftarActivity2.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        if (jsonObject.getString("status").equals("200")) {
+                            Toast.makeText(DaftarActivity2.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             finish();
-                        }else {
-                            Toast.makeText(DaftarActivity2.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(DaftarActivity2.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

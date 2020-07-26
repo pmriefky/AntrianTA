@@ -12,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HairCutActivity"></activity>
+        <activity
+            android:name=".BookingActivity"
+            android:parentActivityName=".AntrianBarberActivity2" />
+        <activity
+            android:name=".OrderActivity"
+            android:parentActivityName=".HairCutActivity" />
+        <activity android:name=".HairCutActivity" />
         <activity android:name=".AntrianBarberActivity2" />
         <activity android:name=".DaftarActivity2" />
         <activity android:name=".SplasgActivity2">
@@ -24,5 +30,4 @@
         </activity>
         <activity android:name=".MainActivity" />
     </application>
-
 </manifest>

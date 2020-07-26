@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,10 @@ public class AntrianBarberActivity2 extends AppCompatActivity {
     RecyclerView recycler;
     @BindView(R.id.btn1)
     Button btn1;
+    @BindView(R.id.btnCekBooking)
+    CardView btnCekBooking;
+    @BindView(R.id.btnLogout)
+    Button btnLogout;
     private boolean doubleBack;
     private Toast backToast;
 
@@ -34,6 +39,8 @@ public class AntrianBarberActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_antrian_barber2);
         ButterKnife.bind(this);
+        prefManager = new PrefManager(this);
+
 
         HairAdapter hairAdapter = new HairAdapter(this);
         recycler.setAdapter(hairAdapter);
@@ -44,6 +51,27 @@ public class AntrianBarberActivity2 extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), HairCutActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnCekBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                prefManager.removeSession();
+                prefManager.spString(PrefManager.SP_ID, "");
+                prefManager.spString(PrefManager.SP_TOKEN_USER, "");
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

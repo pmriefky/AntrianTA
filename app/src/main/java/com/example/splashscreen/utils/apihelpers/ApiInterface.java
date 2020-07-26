@@ -23,4 +23,24 @@ public interface ApiInterface {
 
     @GET("getallservice.php")
     Call<ResponseBody> getHairCut();
+
+    @FormUrlEncoded
+    @POST("getidservice.php")
+    Call<ResponseBody> getServiceID (@Field("kode") String kode);
+
+    @FormUrlEncoded
+    @POST("addbooking.php")
+    Call<ResponseBody> bookingApi (@Field("kode_service") String kode_service,
+                                   @Field("email") String email,
+                                   @Field("token") String token,
+                                   @Field("date") String date);
+
+    @FormUrlEncoded
+    @POST("getbookinguser.php")
+    Call<ResponseBody> getBookingUser(@Field("email") String email,
+                                      @Field("token") String token);
+
+    @GET("getAllBookingDetail.php")
+    Call<ResponseBody> getListBooking();
+
 }
