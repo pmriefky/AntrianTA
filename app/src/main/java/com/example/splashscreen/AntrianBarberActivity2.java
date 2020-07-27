@@ -3,77 +3,81 @@ package com.example.splashscreen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.example.splashscreen.adapter.HairAdapter;
-import com.example.splashscreen.utils.PrefManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AntrianBarberActivity2 extends AppCompatActivity {
 
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
-    @BindView(R.id.btn1)
-    Button btn1;
-    @BindView(R.id.btnCekBooking)
-    CardView btnCekBooking;
-    @BindView(R.id.btnLogout)
-    Button btnLogout;
     private boolean doubleBack;
     private Toast backToast;
 
-    PrefManager prefManager;
-
+    @BindView(R.id.botomNavBar)
+    BottomNavigationView bottombar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_antrian_barber2);
         ButterKnife.bind(this);
-        prefManager = new PrefManager(this);
+        navbarr();
+    }
 
-
-        HairAdapter hairAdapter = new HairAdapter(this);
-        recycler.setAdapter(hairAdapter);
-        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        btn1.setOnClickListener(new View.OnClickListener() {
+    private void navbarr() {
+        Intent intent = getIntent();
+        bottombar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HairCutActivity.class);
-                startActivity(intent);
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment fragment = null;
+                switch (menuItem.getItemId()){
+                    case R.id.home:
+                        changeFragment(new HomeFragmen(), HomeFragmen.class
+                        .getSimpleName());
+                        break;
+
+                    case R.id.account:
+                        changeFragment(new ProfilFragmen(), ProfilFragmen.class
+                        .getSimpleName());
+                        break;
+                    default:
+                        changeFragment(new HomeFragmen(), HomeFragmen.class
+                                .getSimpleName());
+                }
+                return true;
             }
         });
+    }
 
-        btnCekBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
-                startActivity(intent);
-            }
-        });
+    public void changeFragment(Fragment fragment, String tag){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                prefManager.removeSession();
-                prefManager.spString(PrefManager.SP_ID, "");
-                prefManager.spString(PrefManager.SP_TOKEN_USER, "");
+        Fragment current = manager.getPrimaryNavigationFragment();
+        if (current != null){
+            transaction.hide(current);
+        }
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        Fragment temp = manager.findFragmentByTag(tag);
+        if (temp == null){
+            temp = fragment;
+            transaction.add(R.id.container, temp, tag);
+        }else {
+            transaction.show(temp);
+        }
+
+        transaction.setPrimaryNavigationFragment(temp);
+        transaction.setReorderingAllowed(true);
+        transaction.commitAllowingStateLoss();
     }
 
     @Override

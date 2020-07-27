@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/myprofil"
+    android:text="My Profile"
+    android:textSize="20dp"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="20dp"
+    />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/foto"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/myprofil"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/contoh"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foto"
+        android:orientation="vertical"
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            app:contentPadding="10dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="8dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:layout_marginLeft="25dp"
+                android:layout_gravity="left|center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/username"
+                android:text="qwerqwrqfasfasfc"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="25dp"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            app:contentPadding="10dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="8dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:layout_marginLeft="25dp"
+                android:layout_gravity="left|center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="qwerqwrqfasfasfc"
+                android:id="@+id/email"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="25dp"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            app:contentPadding="10dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="8dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:layout_marginLeft="25dp"
+                android:layout_gravity="left|center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="qwerqwrqfasfasfc"
+                android:id="@+id/no_telp"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="25dp"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            app:contentPadding="10dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="8dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password New"
+                android:layout_marginLeft="25dp"
+                android:layout_gravity="left|center"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/password"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="25dp"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnprofil"
+            android:padding="10dp"
+            android:text="Change Password"
+            android:background="@drawable/background_edit_text"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

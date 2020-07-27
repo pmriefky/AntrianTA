@@ -1,11 +1,14 @@
 package com.example.splashscreen.utils.apihelpers;
 
+import android.telecom.CallScreeningService;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
     @FormUrlEncoded
@@ -42,5 +45,14 @@ public interface ApiInterface {
 
     @GET("getAllBookingDetail.php")
     Call<ResponseBody> getListBooking();
+
+    @GET("profil.php")
+    Call<ResponseBody> getProfil(@Query("token") String token);
+
+    @FormUrlEncoded
+    @POST("updatepass.php")
+    Call<ResponseBody> getUpdatePass(@Field("email") String email,
+                                     @Field("password_new") String password,
+                                     @Field("token") String token);
 
 }
