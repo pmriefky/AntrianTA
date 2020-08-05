@@ -55,4 +55,7 @@ public interface ApiInterface {
                                      @Field("password_new") String password,
                                      @Field("token") String token);
 
+    @GET("getpromo.php")
+    Call<ResponseBody> getPromo();
+
 }

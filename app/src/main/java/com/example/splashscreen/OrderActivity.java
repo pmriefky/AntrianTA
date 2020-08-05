@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.example.splashscreen.utils.PrefManager;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
 import com.example.splashscreen.utils.apihelpers.UtilsApi;
@@ -153,6 +154,11 @@ public class OrderActivity extends AppCompatActivity {
                             orderHairName.setText(jsonObject1.getString("nama_service"));
                             orderHairPrice.setText(jsonObject1.getString("harga"));
                             orderHairKeterangan.setText(jsonObject1.getString("keterangan"));
+                            Glide
+                                    .with(getApplicationContext())
+                                    .load(UtilsApi.BASE_URL+jsonObject1.getString("gambar")+"")
+                                    .centerCrop()
+                                    .into(imgOrder);
 
                             btnOrder.setOnClickListener(new View.OnClickListener() {
                                 @Override

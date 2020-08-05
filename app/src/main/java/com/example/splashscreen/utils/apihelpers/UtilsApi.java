@@ -1,7 +1,8 @@
 package com.example.splashscreen.utils.apihelpers;
 
 public class UtilsApi {
-    public static final String BASE_URL = "http://192.168.42.58/db_antrian/";
+    public static final String BASE_URL = "http://192.168.42.76/db_antrian/";
+
 
 
     public static ApiInterface getApiService(){

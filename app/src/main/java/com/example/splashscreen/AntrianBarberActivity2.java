@@ -30,7 +30,10 @@ public class AntrianBarberActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_antrian_barber2);
         ButterKnife.bind(this);
+        changeFragment(new HomeFragmen(), HomeFragmen.class
+                .getSimpleName());
         navbarr();
+
     }
 
     private void navbarr() {
@@ -44,7 +47,6 @@ public class AntrianBarberActivity2 extends AppCompatActivity {
                         changeFragment(new HomeFragmen(), HomeFragmen.class
                         .getSimpleName());
                         break;
-
                     case R.id.account:
                         changeFragment(new ProfilFragmen(), ProfilFragmen.class
                         .getSimpleName());

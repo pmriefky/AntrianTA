@@ -12,10 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.splashscreen.AntrianBarberActivity2;
 import com.example.splashscreen.OrderActivity;
 import com.example.splashscreen.R;
 import com.example.splashscreen.model.HairCut;
+import com.example.splashscreen.utils.apihelpers.UtilsApi;
 
 import java.util.List;
 
@@ -46,6 +48,13 @@ public class HairCutAdapter extends RecyclerView.Adapter<HairCutAdapter.viewHold
         holder.hairName.setText(dataBeans.get(position).getNama_service());
         holder.hairPrice.setText(dataBeans.get(position).getHarga());
         holder.hairKeterangan.setText(dataBeans.get(position).getKeterangan());
+
+        Glide
+                .with(context)
+                .load(UtilsApi.BASE_URL+dataBeans.get(position).getGambar())
+                .centerCrop()
+                .into(holder.imgHair);
+
         holder.cardViewHaircut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

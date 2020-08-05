@@ -5,7 +5,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,10 +17,28 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.splashscreen.adapter.HairAdapter;
+import com.example.splashscreen.adapter.ViewPagerAdapter;
+import com.example.splashscreen.model.HairCut;
+import com.example.splashscreen.model.Promo;
 import com.example.splashscreen.utils.PrefManager;
+import com.example.splashscreen.utils.apihelpers.ApiInterface;
+import com.example.splashscreen.utils.apihelpers.UtilsApi;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragmen extends Fragment {
 
@@ -30,9 +50,17 @@ public class HomeFragmen extends Fragment {
     CardView btnCekBooking;
     @BindView(R.id.btnLogout)
     Button btnLogout;
-
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
 
     PrefManager prefManager;
+    ApiInterface apiInterface;
+    Context context;
+
+    ArrayList<Promo.DataBean> promoBeans;
+    List<HairCut.DataBean> dataBeans;
+
+    ViewPagerAdapter viewPagerAdapter;
 
     public HomeFragmen(){
 
@@ -43,11 +71,16 @@ public class HomeFragmen extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragmen_home, group, false);
         ButterKnife.bind(this, view);
+        viewPager.requestFocus();
         prefManager = new PrefManager(view.getContext());
+        apiInterface = UtilsApi.getApiService();
+        context = view.getContext();
+        fetchBanner();
 
-        HairAdapter hairAdapter = new HairAdapter(view.getContext());
+        fetchData();
+        /*HairAdapter hairAdapter = new HairAdapter(view.getContext());
         recycler.setAdapter(hairAdapter);
-        recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));*/
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,5 +111,81 @@ public class HomeFragmen extends Fragment {
             }
         });
         return view;
+    }
+
+    private void fetchBanner() {
+        apiInterface.getPromo().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("status").equals("200")){
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                            promoBeans = new ArrayList<>();
+                            Gson gson = new Gson();
+
+                            for (int i = 0; i < jsonArray.length() ; i++) {
+                                Promo.DataBean dataBean = gson.fromJson(jsonArray.get(i).toString(), Promo.DataBean.class);
+                                promoBeans.add(dataBean);
+                            }
+
+                            viewPagerAdapter = new ViewPagerAdapter(context, promoBeans);
+
+                            viewPager.setAdapter(viewPagerAdapter);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void fetchData() {
+        apiInterface.getHairCut().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("status").equals("200")){
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                            dataBeans = new ArrayList<>();
+                            Gson gson = new Gson();
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                HairCut.DataBean dataBean = gson.fromJson(jsonArray.get(i).toString(), HairCut.DataBean.class);
+                                dataBeans.add(dataBean);
+                            }
+
+                            HairAdapter hairAdapter = new HairAdapter(context, dataBeans);
+                            recycler.setAdapter(hairAdapter);
+                            recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }
