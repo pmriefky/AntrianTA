@@ -1,12 +1,5 @@
 package com.example.splashscreen;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.example.splashscreen.adapter.HairAdapter;
+import com.example.splashscreen.adapter.ModelRambutAdapter;
 import com.example.splashscreen.adapter.ViewPagerAdapter;
 import com.example.splashscreen.model.HairCut;
+import com.example.splashscreen.model.ModelRambut;
 import com.example.splashscreen.model.Promo;
 import com.example.splashscreen.utils.PrefManager;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
@@ -52,6 +54,8 @@ public class HomeFragmen extends Fragment {
     Button btnLogout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+    @BindView(R.id.linearHair)
+    LinearLayout linearHair;
 
     PrefManager prefManager;
     ApiInterface apiInterface;
@@ -62,13 +66,18 @@ public class HomeFragmen extends Fragment {
 
     ViewPagerAdapter viewPagerAdapter;
 
-    public HomeFragmen(){
+    List<ModelRambut.DataBean> dataBeans1;
+    @BindView(R.id.recycler1)
+    RecyclerView recycler1;
+
+
+    public HomeFragmen() {
 
     }
 
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup group,
-            Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup group,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragmen_home, group, false);
         ButterKnife.bind(this, view);
         viewPager.requestFocus();
@@ -76,8 +85,8 @@ public class HomeFragmen extends Fragment {
         apiInterface = UtilsApi.getApiService();
         context = view.getContext();
         fetchBanner();
-
         fetchData();
+        fetchDataModelRambut();
         /*HairAdapter hairAdapter = new HairAdapter(view.getContext());
         recycler.setAdapter(hairAdapter);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));*/
@@ -117,16 +126,16 @@ public class HomeFragmen extends Fragment {
         apiInterface.getPromo().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if (jsonObject.getString("status").equals("200")){
+                        if (jsonObject.getString("status").equals("200")) {
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
                             promoBeans = new ArrayList<>();
                             Gson gson = new Gson();
 
-                            for (int i = 0; i < jsonArray.length() ; i++) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 Promo.DataBean dataBean = gson.fromJson(jsonArray.get(i).toString(), Promo.DataBean.class);
                                 promoBeans.add(dataBean);
                             }
@@ -154,10 +163,10 @@ public class HomeFragmen extends Fragment {
         apiInterface.getHairCut().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if (jsonObject.getString("status").equals("200")){
+                        if (jsonObject.getString("status").equals("200")) {
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
                             dataBeans = new ArrayList<>();
@@ -179,6 +188,59 @@ public class HomeFragmen extends Fragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void fetchDataModelRambut() {
+        apiInterface.getAllModelRambut().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("status").equals("200")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            Toast.makeText(context, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+                            dataBeans1 = new ArrayList<>();
+                            Gson gson = new Gson();
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                ModelRambut.DataBean dataBean = gson.fromJson(jsonArray.get(i).toString(), ModelRambut.DataBean.class);
+                                dataBeans1.add(dataBean);
+                            }
+                            ModelRambutAdapter modelRambutAdapter = new ModelRambutAdapter(context , dataBeans1);
+                            recycler1.setAdapter(modelRambutAdapter);
+                            recycler1.setLayoutManager(new LinearLayoutManager(context));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                        /*JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("status").equals("200")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            Toast.makeText(context, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+                            dataBeans1 = new ArrayList<>();
+                            Gson gson = new Gson();
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                ModelRambut.DataBean dataBean = gson.fromJson(jsonArray.get(i).toString(), ModelRambut.DataBean.class);
+                                dataBeans1.add(dataBean);
+                            }
+                            ModelRambutAdapter modelRambutAdapter = new ModelRambutAdapter(context , dataBeans1);
+                            recycler1.setAdapter(modelRambutAdapter);
+                            recycler1.setLayoutManager(new LinearLayoutManager(context));
+                        }*/
                 }
             }
 

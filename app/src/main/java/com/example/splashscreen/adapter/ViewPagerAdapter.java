@@ -14,6 +14,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 import com.example.splashscreen.R;
 import com.example.splashscreen.model.Promo;
+import com.example.splashscreen.utils.apihelpers.UtilsApi;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return beans.size();
+        return (beans != null)? beans.size() : 0;
     }
 
     @Override
@@ -45,8 +46,11 @@ public class ViewPagerAdapter extends PagerAdapter {
         imageView = view.findViewById(R.id.gambar);
 
         Promo.DataBean dataBean = beans.get(position);
-        Glide.with(context).load(dataBean.getImages()).centerCrop().into(imageView);
-
+        Glide
+                .with(context)
+                .load(UtilsApi.BASE_URL+dataBean.getImages())
+                .centerCrop()
+                .into(imageView);
         container.addView(view, 0);
         return view;
     }

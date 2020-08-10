@@ -25,8 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:background="#f0f0f0"
-                    android:orientation="horizontal"
+                    android:background="#000"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <androidx.cardview.widget.CardView
@@ -41,8 +41,8 @@
                             <ImageView
                                 android:id="@+id/imgOrder"
                                 android:background="@android:color/white"
-                                android:layout_width="150dp"
-                                android:layout_height="150dp"/>
+                                android:layout_width="match_parent"
+                                android:layout_height="180dp"/>
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -52,23 +52,36 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:text="_______________________________________"
+                            android:textSize="20dp"
+                            android:textColor="#fff"
+                            android:textAlignment="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
                             android:id="@+id/order_hair_name"
                             android:text="Cuci Rambut"
+                            android:textColor="#fff"
+                            android:textAlignment="center"
                             android:textStyle="bold"
                             android:textSize="20dp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                         <TextView
                             android:id="@+id/order_hair_price"
                             android:text="10000"
                             android:textSize="20dp"
-                            android:layout_width="wrap_content"
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                         <TextView
                             android:id="@+id/order_hair_keterangan"
                             android:text="keterangan keterangan ajsdjasnd"
                             android:textSize="20dp"
-                            android:layout_width="wrap_content"
+                            android:textColor="#fff"
+                            android:textAlignment="center"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -98,7 +111,9 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/inpuut_back"
-                android:hint="DD/MM/YYYY"
+                android:hint="DD/MM/YYYY   --->"
+                android:textColorHint="#fff"
+                android:backgroundTint="#000"
                 android:textSize="15sp"
                 android:editable="false"
                 android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
@@ -110,8 +125,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
+                android:textColorHint="#fff"
+                android:backgroundTint="#000"
                 android:background="@drawable/inpuut_back"
-                android:hint="HH:MM WIB"
+                android:hint="HH:MM WIB   --->"
                 android:textSize="15sp"
                 android:editable="false"
                 android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
@@ -126,7 +143,8 @@
             <Button
                 android:id="@+id/btnCancel"
                 android:text="Cancel"
-                android:background="#f0f0f0"
+                android:background="#000"
+                android:textColor="#fff"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
@@ -137,7 +155,8 @@
             <Button
                 android:id="@+id/btnOrder"
                 android:text="Order"
-                android:background="#f0f0f0"
+                android:textColor="#fff"
+                android:background="#000"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>

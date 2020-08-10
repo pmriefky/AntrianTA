@@ -58,4 +58,13 @@ public interface ApiInterface {
     @GET("getpromo.php")
     Call<ResponseBody> getPromo();
 
+    @FormUrlEncoded
+    @POST("cancelorder.php")
+    Call<ResponseBody> getCancelOrder(@Field("id") String id,
+                                      @Field("email") String email,
+                                      @Field("token") String token);
+
+
+    @GET("getallmodelrambut.php")
+    Call<ResponseBody> getAllModelRambut();
 }

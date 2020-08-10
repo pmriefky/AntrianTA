@@ -12,16 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/home"
-            android:background="@drawable/menu"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
         <TextView
             android:layout_toRightOf="@+id/home"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:text="Barber Menu"
             android:textStyle="bold"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
@@ -47,13 +44,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Welcome"
-                    android:textSize="20dp"
-                    android:layout_marginHorizontal="20dp"
-                    />
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btnCekBooking"
                     app:cardCornerRadius="10dp"
@@ -62,20 +52,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp">
                     <RelativeLayout
+                        android:background="#000"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
+                            android:fontFamily="monospace"
+                            android:textColor="#fff"
                             android:text="Booking List"
                             android:layout_centerInParent="true"
                             android:textSize="25dp"
-                            android:textStyle="bold|italic"
+                            android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="250dp"
                     android:id="@+id/viewPager"
 
                     android:clipToPadding="false"
@@ -96,9 +89,10 @@
                     android:layout_height="wrap_content"
                     android:text="Haircut Reservations"
                     android:textSize="15dp"
+                    android:fontFamily="monospace"
                     android:textStyle="bold"/>
                 <Button
-                    android:layout_marginLeft="195dp"
+                    android:layout_marginLeft="175dp"
                     android:backgroundTint="#646464"
                     android:background="@drawable/ic_baseline_arrow_forward_24"
                     android:layout_width="40dp"
@@ -107,6 +101,7 @@
 
             </LinearLayout>
             <RelativeLayout
+                android:id="@+id/relative1"
                 android:layout_below="@id/linearHair"
                 android:layout_width="match_parent"
                 android:layout_height="150dp">
@@ -119,6 +114,33 @@
 
                     />
             </RelativeLayout>
+            <TextView
+                android:id="@+id/hairstyle1"
+                android:layout_below="@id/relative1"
+                android:text="Hair Style Model"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <RelativeLayout
+                android:layout_marginTop="40dp"
+                android:layout_below="@id/relative1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+
+                    android:id="@+id/recycler1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+
+                    />
+            </RelativeLayout>
+
 
         </RelativeLayout>
     </ScrollView>
