@@ -2,12 +2,19 @@ package com.example.splashscreen.utils.apihelpers;
 
 import android.telecom.CallScreeningService;
 
+import java.util.Map;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -29,14 +36,14 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("getidservice.php")
-    Call<ResponseBody> getServiceID (@Field("kode") String kode);
+    Call<ResponseBody> getServiceID(@Field("kode") String kode);
 
     @FormUrlEncoded
     @POST("addbooking.php")
-    Call<ResponseBody> bookingApi (@Field("kode_service") String kode_service,
-                                   @Field("email") String email,
-                                   @Field("token") String token,
-                                   @Field("date") String date);
+    Call<ResponseBody> bookingApi(@Field("kode_service") String kode_service,
+                                  @Field("email") String email,
+                                  @Field("token") String token,
+                                  @Field("date") String date);
 
     @FormUrlEncoded
     @POST("getbookinguser.php")
@@ -67,4 +74,10 @@ public interface ApiInterface {
 
     @GET("getallmodelrambut.php")
     Call<ResponseBody> getAllModelRambut();
+
+    @Multipart
+    @POST("updateImageProfile.php")
+    Call<ResponseBody> changeProfileImage(@PartMap Map<String, RequestBody> stringBody,
+                                          @Part MultipartBody.Part filePart
+    );
 }

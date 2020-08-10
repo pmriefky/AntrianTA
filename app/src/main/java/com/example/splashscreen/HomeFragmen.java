@@ -207,7 +207,6 @@ public class HomeFragmen extends Fragment {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("status").equals("200")) {
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            Toast.makeText(context, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                             dataBeans1 = new ArrayList<>();
                             Gson gson = new Gson();
