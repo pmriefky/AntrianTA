@@ -24,6 +24,7 @@ import androidx.loader.content.CursorLoader;
 
 import com.bumptech.glide.Glide;
 import com.example.splashscreen.model.Profil;
+import com.example.splashscreen.utils.LoadingDialog;
 import com.example.splashscreen.utils.PrefManager;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
 import com.example.splashscreen.utils.apihelpers.UtilsApi;
@@ -71,6 +72,7 @@ public class ProfilFragmen extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
+    LoadingDialog loadingDialog;
     ApiInterface apiInterface;
     PrefManager prefManager;
     ArrayList<Profil.DataBean> arrayList;
@@ -90,6 +92,7 @@ public class ProfilFragmen extends Fragment {
         apiInterface = UtilsApi.getApiService();
         context = view.getContext();
         prefManager = new PrefManager(context);
+        loadingDialog = new LoadingDialog(context);
         profil();
         btnprofil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,12 +131,14 @@ public class ProfilFragmen extends Fragment {
     }
 
     private void updatepass() {
+        loadingDialog.startLoadingDialog();
         apiInterface.getUpdatePass(prefManager.getEmailr(), password.getText().toString(), prefManager.getTokenUser()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
+                        loadingDialog.dismissLoadingDialog();
                         if (jsonObject.getString("status").equals("200")) {
                             Toast.makeText(context, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                         }
@@ -156,7 +161,7 @@ public class ProfilFragmen extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                loadingDialog.dismissLoadingDialog();
             }
         });
     }

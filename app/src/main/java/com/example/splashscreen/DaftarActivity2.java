@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.splashscreen.utils.LoadingDialog;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
 import com.example.splashscreen.utils.apihelpers.UtilsApi;
 
@@ -43,12 +44,14 @@ public class DaftarActivity2 extends AppCompatActivity {
     Button tombolmasuk;
 
     ApiInterface apiInterface;
+    LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar2);
         ButterKnife.bind(this);
+        loadingDialog = new LoadingDialog(this);
         apiInterface = UtilsApi.getApiService();
         tombolmasuk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,7 @@ public class DaftarActivity2 extends AppCompatActivity {
     }
 
     private void FetchRegister() {
+        loadingDialog.startLoadingDialog();
         apiInterface.registerApi(nama.getText().toString(),
                 username.getText().toString(),
                 notelp.getText().toString(),
@@ -86,6 +90,7 @@ public class DaftarActivity2 extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
+                        loadingDialog.dismissLoadingDialog();
                         if (jsonObject.getString("status").equals("200")) {
                             Toast.makeText(DaftarActivity2.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -105,6 +110,7 @@ public class DaftarActivity2 extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(DaftarActivity2.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                loadingDialog.dismissLoadingDialog();
             }
         });
     }

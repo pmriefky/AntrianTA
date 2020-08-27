@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splashscreen.adapter.BookingListAdapter;
 import com.example.splashscreen.model.BookingList;
+import com.example.splashscreen.utils.LoadingDialog;
 import com.example.splashscreen.utils.PrefManager;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
 import com.example.splashscreen.utils.apihelpers.UtilsApi;
@@ -51,6 +52,7 @@ public class BookingActivity extends AppCompatActivity {
     RecyclerView recyclerListBooking;
 
 
+    LoadingDialog loadingDialog;
     ApiInterface apiInterface;
     PrefManager prefManager;
     Context context;
@@ -68,6 +70,7 @@ public class BookingActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbarBooking);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        loadingDialog = new LoadingDialog(this);
 
         apiInterface = UtilsApi.getApiService();
         prefManager = new PrefManager(this);
@@ -78,12 +81,14 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private void fetchDataBooking() {
+        loadingDialog.startLoadingDialog();
         apiInterface.getBookingUser(prefManager.getEmailr(), prefManager.getTokenUser()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
+                        loadingDialog.dismissLoadingDialog();
                         if (jsonObject.getString("status").equals("200")) {
                             final JSONObject jsonObject1 = new JSONObject(jsonObject.getString("data"));
                             bookingDate.setText(jsonObject1.getString("date"));
@@ -125,16 +130,19 @@ public class BookingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(BookingActivity.this, "Connection Problem", Toast.LENGTH_SHORT).show();
+                loadingDialog.dismissLoadingDialog();
             }
         });
     }
 
     private void cancelorder(String id) {
+        loadingDialog.startLoadingDialog();
         apiInterface.getCancelOrder(id, prefManager.getEmailr(), prefManager.getTokenUser()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
+                        loadingDialog.dismissLoadingDialog();
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("status").equals("200")) {
                             Toast.makeText(context, ""+ jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
@@ -155,18 +163,20 @@ public class BookingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                loadingDialog.dismissLoadingDialog();
             }
         });
     }
 
 
     private void fetchDataListBooking() {
+        loadingDialog.startLoadingDialog();
         apiInterface.getListBooking().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
+                        loadingDialog.dismissLoadingDialog();
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("status").equals("200")) {
                             dataBeans = new ArrayList<>();
@@ -195,6 +205,7 @@ public class BookingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(context, "Connection Problem", Toast.LENGTH_SHORT).show();
+                loadingDialog.dismissLoadingDialog();
             }
         });
     }

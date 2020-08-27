@@ -1,5 +1,8 @@
 package com.example.splashscreen;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.splashscreen.utils.AppReceiver;
+import com.example.splashscreen.utils.LoadingDialog;
 import com.example.splashscreen.utils.PrefManager;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
 import com.example.splashscreen.utils.apihelpers.UtilsApi;
@@ -19,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +34,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+    private PendingIntent pendingIntent;
+    private static  int ALARM_REQUEST_CODE=134;
+
+    private int interval_seconds = 10;
+    private int NOTIFICATION_ID = 1;
 
     @BindView(R.id.signUp)
     TextView signUp;
@@ -40,13 +51,14 @@ public class MainActivity extends AppCompatActivity {
 
     ApiInterface apiInterface;
     PrefManager prefManager;
-
+    LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        loadingDialog = new LoadingDialog(this);
         apiInterface = UtilsApi.getApiService();
         prefManager = new PrefManager(this);
 
@@ -70,10 +82,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        Intent alarmIntent = new Intent(this, AppReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, ALARM_REQUEST_CODE, alarmIntent, 0);
+        startAlarmManager();
+    }
+    public void startAlarmManager(){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, interval_seconds);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        manager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
 
+        Toast.makeText(this, "AlarmManager Start.", Toast.LENGTH_SHORT).show();
     }
 
     private void fetchApi() {
+        loadingDialog.startLoadingDialog();
         apiInterface.loginApi(username.getText().toString(),
                 password.getText().toString()).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -81,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
+                        loadingDialog.dismissLoadingDialog();
                         if (jsonObject.getString("status").equals("200")){
                             Toast.makeText(MainActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
@@ -106,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loadingDialog.dismissLoadingDialog();
                 Toast.makeText(MainActivity.this, "Connection Problem", Toast.LENGTH_SHORT).show();
             }
         });

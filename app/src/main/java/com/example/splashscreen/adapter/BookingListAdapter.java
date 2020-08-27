@@ -36,7 +36,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull viewHolders holder, int position) {
-        holder.bookinglistNama.setText(dataBeans.get(position).getNama()+"");
+
         holder.bookinglistService.setText(dataBeans.get(position).getNama_service()+"");
         holder.bookinglistTanggal.setText(dataBeans.get(position).getDate()+"");
     }
@@ -49,8 +49,6 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
     public class viewHolders extends RecyclerView.ViewHolder {
         @BindView(R.id.bookinglistTanggal)
         TextView bookinglistTanggal;
-        @BindView(R.id.bookinglistNama)
-        TextView bookinglistNama;
         @BindView(R.id.bookinglistService)
         TextView bookinglistService;
         public viewHolders(@NonNull View itemView) {

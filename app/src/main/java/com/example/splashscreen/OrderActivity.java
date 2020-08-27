@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.example.splashscreen.utils.LoadingDialog;
 import com.example.splashscreen.utils.PrefManager;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
 import com.example.splashscreen.utils.apihelpers.UtilsApi;
@@ -66,7 +67,7 @@ public class OrderActivity extends AppCompatActivity {
 
     ApiInterface apiInterface;
     PrefManager prefManager;
-
+    LoadingDialog loadingDialog;
     String kode;
 
     @Override
@@ -81,6 +82,7 @@ public class OrderActivity extends AppCompatActivity {
         kode = intent.getStringExtra("KODE");
         apiInterface = UtilsApi.getApiService();
         prefManager = new PrefManager(this);
+        loadingDialog = new LoadingDialog(this);
 
         txtFormDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,12 +145,14 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void fetchDataService() {
+        loadingDialog.startLoadingDialog();
         apiInterface.getServiceID(kode).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
+                        loadingDialog.dismissLoadingDialog();
                         if (jsonObject.getString("status").equals("200")) {
                             JSONObject jsonObject1 = new JSONObject(jsonObject.getString("data"));
                             orderHairName.setText(jsonObject1.getString("nama_service"));
@@ -185,11 +189,13 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(OrderActivity.this, "Connection Problem", Toast.LENGTH_SHORT).show();
+                loadingDialog.dismissLoadingDialog();
             }
         });
     }
 
     private void fetchBooking() {
+        loadingDialog.startLoadingDialog();
         apiInterface.bookingApi(kode,
                 prefManager.getEmailr(),
                 prefManager.getTokenUser(),
@@ -198,6 +204,7 @@ public class OrderActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
                     try {
+                        loadingDialog.dismissLoadingDialog();
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("status").equals("200")){
                             Toast.makeText(OrderActivity.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
@@ -218,6 +225,7 @@ public class OrderActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loadingDialog.dismissLoadingDialog();
                 Toast.makeText(OrderActivity.this, "Connection Problem", Toast.LENGTH_SHORT).show();
             }
         });

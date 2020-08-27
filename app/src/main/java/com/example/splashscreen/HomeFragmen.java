@@ -1,5 +1,7 @@
 package com.example.splashscreen;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.example.splashscreen.adapter.ViewPagerAdapter;
 import com.example.splashscreen.model.HairCut;
 import com.example.splashscreen.model.ModelRambut;
 import com.example.splashscreen.model.Promo;
+import com.example.splashscreen.utils.AppReceiver;
 import com.example.splashscreen.utils.PrefManager;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
 import com.example.splashscreen.utils.apihelpers.UtilsApi;
@@ -33,6 +36,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,7 +47,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragmen extends Fragment {
-
     @BindView(R.id.recycler)
     RecyclerView recycler;
     @BindView(R.id.btn1)
@@ -87,6 +90,7 @@ public class HomeFragmen extends Fragment {
         fetchBanner();
         fetchData();
         fetchDataModelRambut();
+
         /*HairAdapter hairAdapter = new HairAdapter(view.getContext());
         recycler.setAdapter(hairAdapter);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));*/

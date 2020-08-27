@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splashscreen.adapter.HairCutAdapter;
 import com.example.splashscreen.model.HairCut;
+import com.example.splashscreen.utils.LoadingDialog;
 import com.example.splashscreen.utils.PrefManager;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
 import com.example.splashscreen.utils.apihelpers.UtilsApi;
@@ -40,6 +41,7 @@ public class HairCutActivity extends AppCompatActivity {
 
     PrefManager prefManager;
     ApiInterface apiInterface;
+    LoadingDialog loadingDialog;
 
     List<HairCut.DataBean> dataBeans;
     @BindView(R.id.recyclerHairCut)
@@ -54,15 +56,18 @@ public class HairCutActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         prefManager = new PrefManager(this);
         apiInterface = UtilsApi.getApiService();
+        loadingDialog = new LoadingDialog(this);
         fetchData();
     }
 
     private void fetchData() {
+        loadingDialog.startLoadingDialog();
         apiInterface.getHairCut().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
+                        loadingDialog.dismissLoadingDialog();
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("status").equals("200")) {
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -92,6 +97,7 @@ public class HairCutActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loadingDialog.dismissLoadingDialog();
                 Toast.makeText(HairCutActivity.this, "Connection Problem", Toast.LENGTH_SHORT).show();
             }
         });
