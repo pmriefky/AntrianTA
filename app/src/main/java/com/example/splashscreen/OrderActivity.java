@@ -1,8 +1,12 @@
 package com.example.splashscreen;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.MenuItem;
@@ -20,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.example.splashscreen.utils.AppReceiver;
 import com.example.splashscreen.utils.LoadingDialog;
 import com.example.splashscreen.utils.PrefManager;
 import com.example.splashscreen.utils.apihelpers.ApiInterface;
@@ -30,7 +35,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +47,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OrderActivity extends AppCompatActivity {
+    static final long ONE_MINUTE_IN_MILLIS=60000;
+    private PendingIntent pendingIntent;
+    private static  int ALARM_REQUEST_CODE=134;
+    private int interval_seconds = 10;
+    private int NOTIFICATION_ID = 1;
 
     @BindView(R.id.toolbarOrder)
     Toolbar toolbarOrder;
@@ -193,7 +205,37 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
     }
+    private void setAlarmForBooking(){
+        String[] txtWaktuTanggal = txtFormDate.getText().toString().split("-");
+        String[] txtWaktuJam = txtFormTime.getText().toString().split(":");
 
+        Calendar cal =Calendar.getInstance();
+        cal.set(Integer.parseInt(txtWaktuTanggal[0]),
+                Integer.parseInt(txtWaktuTanggal[1]),
+                Integer.parseInt(txtWaktuTanggal[2]),
+                Integer.parseInt(txtWaktuJam[0]),
+                Integer.parseInt(txtWaktuJam[1]),
+                Integer.parseInt(txtWaktuJam[2])
+                );
+
+        SimpleDateFormat df =new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        long t =cal.getTimeInMillis();
+        Date afterRemoveTenMins=new Date(t - (30 * ONE_MINUTE_IN_MILLIS));
+        prefManager.setAlarm("alarm", df.format(afterRemoveTenMins));
+        Intent alarmIntent = new Intent(this, AppReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, ALARM_REQUEST_CODE, alarmIntent, 0);
+        startAlarmManager();
+        //Toast.makeText(this, prefManager.getAlarm(), Toast.LENGTH_SHORT).show();
+
+    }
+    public void startAlarmManager(){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, interval_seconds);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        manager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+
+        Toast.makeText(this, "AlarmManager Start.", Toast.LENGTH_SHORT).show();
+    }
     private void fetchBooking() {
         loadingDialog.startLoadingDialog();
         apiInterface.bookingApi(kode,
@@ -210,6 +252,7 @@ public class OrderActivity extends AppCompatActivity {
                             Toast.makeText(OrderActivity.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), AntrianBarberActivity2.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            setAlarmForBooking();
                             startActivity(intent);
                             finish();
                         }else{

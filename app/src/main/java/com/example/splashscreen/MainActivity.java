@@ -34,11 +34,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private PendingIntent pendingIntent;
-    private static  int ALARM_REQUEST_CODE=134;
-
-    private int interval_seconds = 10;
-    private int NOTIFICATION_ID = 1;
 
     @BindView(R.id.signUp)
     TextView signUp;
@@ -82,17 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        Intent alarmIntent = new Intent(this, AppReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, ALARM_REQUEST_CODE, alarmIntent, 0);
-        startAlarmManager();
-    }
-    public void startAlarmManager(){
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, interval_seconds);
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        manager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
 
-        Toast.makeText(this, "AlarmManager Start.", Toast.LENGTH_SHORT).show();
     }
 
     private void fetchApi() {

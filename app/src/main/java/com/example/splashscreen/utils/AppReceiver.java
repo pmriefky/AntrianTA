@@ -36,27 +36,13 @@ public class AppReceiver extends BroadcastReceiver {
     Intent _intent;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
         _context = context;
         _intent = intent;
         Intent alarmIntent = new Intent(context, AppReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(context, ALARM_REQUEST_CODE, alarmIntent, 0);
-        //set waktu sekarang berdasarkan intervall
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                while (true){
-                    DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-                    Date date = new Date();
-                    String waktu = dateFormat.format(date);
-                    Log.i("jam : ", waktu);
-                    if(waktu.equals("17:59:00")){
-                        sendNotification(_context, _intent);
-                    }
-                }
-            }
-        }.start();
+
+
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, interval_seconds);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -69,13 +55,34 @@ public class AppReceiver extends BroadcastReceiver {
             manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
         //kirim notifikasi
+        //set waktu sekarang berdasarkan intervall
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                while (true){
+
+                    DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                    PrefManager prefManager = new PrefManager(_context);
+                    Date date = new Date();
+                    String waktu = dateFormat.format(date);
+                    String alarm = prefManager.getAlarm();
+                    String[] jam = alarm.split(" ");
+                    Log.i("alarm : ", alarm);
+                    Log.i("jam   : ", waktu);
+                    if(waktu.equals(jam[1])){
+                        sendNotification(_context, _intent);
+                    }
+                }
+            }
+        }.start();
     }
 
     private void sendNotification(Context context, Intent intent) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy HH:mm:ss");
         String datetimex = sdf.format(new Date());
-        String notif_title = "Coba AlarmManager Notif";
-        String notif_content = "Notif time"+datetimex;
+        String notif_title = "Kanan Barbershop";
+        String notif_content = "Silahkan datang 30 menit sebelum pemesanan, TERIMA KASIH!!!";
         alarmNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent newIntent = new Intent(context, HomeFragmen.class);
         newIntent.putExtra("notifkey","notifvalue");

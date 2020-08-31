@@ -16,6 +16,8 @@ public class PrefManager {
     public static final String SP_ID = "spID";
     public static final String SP_TOKEN_USER = "spTokenUser";
 
+    public static final String ALARM = "alarm";
+
 
 
     public PrefManager(Context context){
@@ -47,6 +49,14 @@ public class PrefManager {
     public void spString(String key, String value){
         editor.putString(key, value);
         editor.commit();
+    }
+
+    public void setAlarm(String key, String tanggal){
+        editor.putString(key, tanggal);
+        editor.commit();
+    }
+    public String getAlarm(){
+        return  pref.getString(ALARM, "");
     }
 
     public int getId(){
