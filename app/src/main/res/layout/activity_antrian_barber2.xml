@@ -16,7 +16,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/botomNavBar"
         android:layout_alignParentBottom="true"
-        android:background="#fff"
+        android:background="#d3cc88"
         app:menu="@menu/menu_bottom_nav"
         app:itemTextColor="@drawable/color_state"
         app:itemIconTint="@drawable/color_state"

@@ -2,20 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back4"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-<TextView
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/background_myprofil"
-    android:id="@+id/myprofil"
-    android:text="My Profile"
-    android:textColor="#fff"
-    android:textAlignment="center"
-    android:textSize="25dp"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginTop="20dp"
-    />
+    android:layout_height="match_parent"
+    android:background="#3fff">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/myprofil"
+        android:text="My Profile"
+        android:textColor="#FFFBFB"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        />
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -26,12 +30,13 @@
         android:src="@drawable/contoh"
         />
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/foto"
         android:padding="10dp"
         android:layout_margin="10dp"
-        android:background="@drawable/background_myprofil"
+        android:background="@drawable/background_edit_text"
         android:orientation="vertical"
         >
         <androidx.cardview.widget.CardView
@@ -46,12 +51,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:text="Username"
                 android:layout_marginLeft="25dp"
                 android:layout_gravity="left|center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:id="@+id/username"
                 android:text="qwerqwrqfasfasfc"
                 android:layout_gravity="right|center"
@@ -70,12 +77,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:text="Email"
                 android:layout_marginLeft="25dp"
                 android:layout_gravity="left|center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:text="qwerqwrqfasfasfc"
                 android:id="@+id/email"
                 android:layout_gravity="right|center"
@@ -94,12 +103,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:text="Phone"
                 android:layout_marginLeft="25dp"
                 android:layout_gravity="left|center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:text="qwerqwrqfasfasfc"
                 android:id="@+id/no_telp"
                 android:layout_gravity="right|center"
@@ -109,7 +120,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:elevation="0dp"
             app:contentPadding="10dp"
             android:layout_marginHorizontal="15dp"
@@ -118,12 +129,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:text="Password New"
                 android:layout_marginLeft="25dp"
                 android:layout_gravity="left|center"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:id="@+id/password"
                 android:layout_gravity="right|center"
                 android:layout_marginRight="25dp"
@@ -131,15 +144,19 @@
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="55dp"
             android:layout_gravity="center"
+            android:textColor="#000"
             android:id="@+id/btnprofil"
             android:padding="10dp"
             android:text="Change Password"
-            android:background="#fff"
+            android:background="#d3cc88"
             />
     </LinearLayout>
+
+</RelativeLayout>
+
 
 
 </RelativeLayout>

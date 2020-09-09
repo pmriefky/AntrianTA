@@ -4,17 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/order"
     tools:context=".OrderActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarOrder"
-        android:background="@android:color/white"
+        android:background="#3fff"
+        app:titleTextColor="#FFFBFB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <LinearLayout
+        android:background="#3fff"
         android:layout_below="@id/toolbarOrder"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_margin="20dp"
             android:layout_width="match_parent"

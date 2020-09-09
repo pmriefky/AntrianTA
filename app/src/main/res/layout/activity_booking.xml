@@ -4,17 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/order"
     tools:context=".BookingActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarBooking"
-        android:background="@android:color/white"
+        app:titleTextColor="#FFFBFB"
+        android:background="#3fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <LinearLayout
+        android:background="#3fff"
         android:layout_below="@+id/toolbarBooking"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <TextView
             android:text="My Booking"
             android:layout_marginHorizontal="20dp"

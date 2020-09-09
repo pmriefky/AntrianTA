@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     tools:context=".SplasgActivity2"
-
     >
     
     <ImageView
         android:layout_width="400dp"
         android:layout_height="400dp"
-        android:src="@drawable/logoo"
+        android:src="@drawable/splh"
         android:layout_centerInParent="true"
         />
 

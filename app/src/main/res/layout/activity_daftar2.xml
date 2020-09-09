@@ -4,18 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back3"
     tools:context=".DaftarActivity2"
-    android:padding="10dp">
+    >
 
     <LinearLayout
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
-        <Button
-            android:backgroundTint="#646464"
-            android:background="@drawable/chefronleft"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
         <TextView
             android:textSize="20dp"
             android:textStyle="bold"
@@ -29,6 +25,7 @@
     android:padding="10dp"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="#3fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <TextView
@@ -36,6 +33,7 @@
     android:gravity="center"
     android:textSize="25dp"
     android:textStyle="bold"
+    android:textColor="#FFFBFB"
     android:layout_marginBottom="20dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
@@ -44,9 +42,10 @@
         android:id="@+id/nama"
         android:background="@drawable/background_edit_text"
         android:paddingLeft="10dp"
+        android:textColorHint="#FFFBFB"
         android:drawablePadding="10dp"
         android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="50dp"
         android:drawableLeft="@drawable/nama" />
     <EditText
@@ -57,22 +56,25 @@
         android:background="@drawable/background_edit_text"
         android:paddingLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
+        android:textColorHint="#FFFBFB"
+        android:layout_width="320dp"
         android:layout_height="50dp"/>
     <EditText
         android:hint="Nomor Telp."
         android:id="@+id/notelp"
+        android:textColorHint="#FFFBFB"
         android:layout_marginTop="5dp"
         android:inputType="number"
         android:background="@drawable/background_edit_text"
         android:paddingLeft="10dp"
         android:drawablePadding="10dp"
         android:drawableLeft="@drawable/telpon"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="50dp"/>
 
     <EditText
         android:hint="Email"
+        android:textColorHint="#FFFBFB"
         android:id="@+id/email"
         android:layout_marginTop="5dp"
         android:drawableLeft="@drawable/email"
@@ -80,38 +82,41 @@
         android:inputType="textEmailAddress"
         android:background="@drawable/background_edit_text"
         android:paddingLeft="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="50dp"/>
     <EditText
         android:hint="Password"
         android:id="@+id/password"
+        android:textColorHint="#FFFBFB"
         android:layout_marginTop="5dp"
         android:drawableLeft="@drawable/password"
         android:drawablePadding="10dp"
         android:inputType="textPassword"
         android:background="@drawable/background_edit_text"
         android:paddingLeft="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="50dp"/>
 
     <EditText
         android:hint="Password"
         android:id="@+id/password2"
+        android:textColorHint="#FFFBFB"
         android:layout_marginTop="5dp"
         android:drawableLeft="@drawable/password"
         android:drawablePadding="10dp"
         android:inputType="textPassword"
         android:background="@drawable/background_edit_text"
         android:paddingLeft="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="50dp"/>
     <Button
         android:id="@+id/tombolmasuk"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:textStyle="bold"
+        android:textColor="#FFFBFB"
         android:layout_marginTop="40dp"
-        android:background="@drawable/background_edit_text"
+        android:background="@drawable/btncolor"
         android:textSize="18dp"
         android:textAllCaps="false"
         android:text="Sign Up"

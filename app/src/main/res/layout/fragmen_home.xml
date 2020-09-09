@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/order"
     tools:context=".AntrianBarberActivity2">
 
     <RelativeLayout
         android:id="@+id/lin1"
         android:padding="10dp"
+        android:background="#3fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -17,8 +19,9 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:text="Barber Menu"
+            android:fontFamily="@font/font"
             android:textStyle="bold"
-            android:textColor="#000"
+            android:textColor="#FFFBFB"
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -27,6 +30,7 @@
             android:id="@+id/btnLogout"
             android:text="Log Out"
             android:textColor="#fff"
+
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:backgroundTint="#000"
@@ -35,6 +39,7 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <ScrollView
+        android:background="#3fff"
         android:layout_below="@id/lin1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -59,7 +64,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
-                            android:fontFamily="monospace"
+                            android:fontFamily="@font/font"
                             android:textColor="#fff"
                             android:text="Booking List"
                             android:layout_centerInParent="true"
@@ -92,12 +97,12 @@
                     android:layout_height="wrap_content"
                     android:text="Haircut Reservations"
                     android:textSize="15dp"
-                    android:textColor="#000"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/font"
+                    android:textColor="#FFFBFB"
                     android:textStyle="bold"/>
                 <Button
                     android:layout_marginLeft="175dp"
-                    android:backgroundTint="#000"
+                    android:backgroundTint="#FFFBFB"
                     android:background="@drawable/ic_baseline_arrow_forward_24"
                     android:layout_width="40dp"
                     android:id="@+id/btn1"
@@ -125,8 +130,8 @@
                 android:paddingLeft="10dp"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="#000"
-                android:fontFamily="monospace"
+                android:textColor="#FFFBFB"
+                android:fontFamily="@font/font"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
